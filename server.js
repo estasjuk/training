@@ -13,7 +13,5 @@ mongoose.connect(DB_HOST)
   process.exit(1);
 });
 
-// bRJu57hIRP7NHXFC
-
 
 
