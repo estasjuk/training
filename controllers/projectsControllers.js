@@ -1,16 +1,16 @@
-const { Contact } = require('../models/contacts');
+const { Project } = require('../models/projects');
 
 const HttpError = require('../helpers/HttpError');
 
 const { controllerWrapper } = require('../utils/contollerWrapper');
 
 
-const getAllContacts = async (req, res) => {
+const getAllProjects = async (req, res) => {
   const { _id: owner } = req.user;
-  const { page = 1, limit = 5, favorite } = req.query;
+  const { page = 1, limit = 5 } = req.query;
   const skip = (page - 1) * limit;
-  const contacts = await Contact.find(
-    favorite ? { owner, favorite } : { owner },
+  const projects = await Project.find(
+     { owner },
     "-createdAt -updatedAt",
     { skip, limit})
     .populate("owner", "email"); // returns all data from the collection
@@ -19,15 +19,15 @@ const getAllContacts = async (req, res) => {
     status: 'success',
     code: 200,
     data: {
-      result: contacts
+      result: projects
     },
   }); 
 }
 
-const getContactById = async (req, res) => {
+const getProjectById = async (req, res) => {
     const {contactId} = req.params;
     // const contact = await Contact.findOne({_id: contactId});
-  const contact = await Contact.findById(contactId);
+  const contact = await Project.findById(contactId);
     if(!contact) {
       throw new HttpError(404, 'Contact not found');
     }
@@ -40,9 +40,9 @@ const getContactById = async (req, res) => {
     });
 }
 
-const addContact = async (req, res, next) => {
-    const { _id: owner } = req.user;
-  const result = await Contact.create({ ...req.body, owner });
+const addProject = async (req, res, next) => {
+  const { _id: owner } = req.user;
+  const result = await Project.create({ ...req.body, owner });
     res.status(201).json({
       status: 'success',
       code: 201,
@@ -52,9 +52,9 @@ const addContact = async (req, res, next) => {
     });  
  }
 
-const updateContact =  async (req, res, next) => {
+const updateProject =  async (req, res, next) => {
     const {contactId} = req.params;
-  const result = await Contact.findByIdAndUpdate(contactId, req.body, {new: true});
+    const result = await Project.findByIdAndUpdate(contactId, req.body, {new: true});
     if(!result) {
       throw new HttpError(404, 'Contact not found');
     }
@@ -67,9 +67,9 @@ const updateContact =  async (req, res, next) => {
     });
 }
 
-const updateStatusContact =  async (req, res, next) => {
+const updateStatusProject =  async (req, res, next) => {
     const {contactId} = req.params;
-  const result = await Contact.findByIdAndUpdate(contactId, req.body, {new: true});
+    const result = await Project.findByIdAndUpdate(contactId, req.body, {new: true});
     if(!result) {
       throw new HttpError(404, 'Not found');
     }
@@ -82,9 +82,9 @@ const updateStatusContact =  async (req, res, next) => {
     });
 }
 
-const removeContact = async (req, res, next) => {
+const removeProject = async (req, res, next) => {
     const {contactId} = req.params;
-    const result = await Contact.findByIdAndDelete(contactId, req.body);
+    const result = await Project.findByIdAndDelete(contactId, req.body);
     if(!result) {
       throw new HttpError(404, 'Contact not found');
     }
@@ -99,10 +99,10 @@ const removeContact = async (req, res, next) => {
 }
 
 module.exports = {
-    getAllContacts: controllerWrapper(getAllContacts),
-    getContactById: controllerWrapper(getContactById),
-    addContact: controllerWrapper(addContact),
-    updateContact: controllerWrapper(updateContact),
-    updateStatusContact: controllerWrapper(updateStatusContact),
-    removeContact: controllerWrapper(removeContact),
+    getAllProjects: controllerWrapper(getAllProjects),
+    getProjectById: controllerWrapper(getProjectById),
+    addProject: controllerWrapper(addProject),
+    updateProject: controllerWrapper(updateProject),
+    updateStatusProject: controllerWrapper(updateStatusProject),
+    removeProject: controllerWrapper(removeProject),
 }

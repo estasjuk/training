@@ -1,21 +1,15 @@
 const { Schema, model } = require('mongoose');
 const { handleMongooseError } = require('../utils/handleMongooseError');
 
-const contactSchema = new Schema({
+const projectSchema = new Schema({
     name: {
       type: String,
       required: [true, 'Set name for contact'], // change the standart error text
     },
-    email: {
+    description: {
       type: String,
-    },
-    phone: {
-      type: String,
-    },
-    favorite: {
-      type: Boolean,
-      default: false,
-    },
+      required: [true],
+  },
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'user',
@@ -23,12 +17,10 @@ const contactSchema = new Schema({
 }, { versionKey: false, timestamps: true, });
 
 
+projectSchema.post('save', handleMongooseError);
 
-
-contactSchema.post('save', handleMongooseError);
-
-const Contact = model('contact', contactSchema); // create connected to contacts collection model, that will work with contactSchema
+const Project = model('project', projectSchema); // create connected to projects collection model, that will work with projectSchema
 
 module.exports = {
-  Contact,
+  Project,
 };

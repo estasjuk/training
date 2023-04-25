@@ -4,7 +4,7 @@ const cors = require('cors');
 require("dotenv").config();
 
 const authRouter = require('./routes/api/authRoutes');
-const contactsRouter = require('./routes/api/contactsRoutes');
+const projectsRouter = require('./routes/api/projectsRoutes');
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.static("public")); // якщо прийде запит на зображення, брати їх з папки public
 
 app.use('/api/auth', authRouter);
-app.use('/api/contacts', contactsRouter);
+app.use('/api/projects', projectsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' })
