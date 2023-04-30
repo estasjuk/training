@@ -1,7 +1,9 @@
 const Joi = require('joi')
     .extend(require('@joi/date'));
 
-const addSprintSchema = Joi.object({
+// const validator = require('express-joi-validation').createValidator({});
+
+const addTaskSchema = Joi.object({
     name: Joi.string().required().messages({
         "any.required": `"name" is required`,
         "string.empty": `"name" cannot be empty`,
@@ -28,11 +30,15 @@ const addSprintSchema = Joi.object({
     }),  
 });
 
-const updateSprintSchema = Joi.object({
-    name: Joi.string(),
+const findTaskByNameSchema = Joi.object({
+    taskName: Joi.string().messages({
+        "any.required": `"name" is required`,
+        "string.empty": `"name" cannot be empty`,
+    }),
 });
 
+
 module.exports = {
-  addSprintSchema,
-  updateSprintSchema,
+  addTaskSchema,
+  findTaskByNameSchema,
 };

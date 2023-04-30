@@ -13,11 +13,8 @@ const addProjectSchema = Joi.object({
 
 const updateProjectSchema = Joi.object({
     name: Joi.string(),
-    phone: Joi.string(),
-    email: Joi.string().email(),
+    description: Joi.string(),
 });
-
-
 
 module.exports = {
   addProjectSchema,
