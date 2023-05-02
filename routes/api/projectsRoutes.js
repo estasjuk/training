@@ -19,6 +19,7 @@ const { addTask, findTaskByName, removeTask } = require('../../controllers/tasks
 
 const router = express.Router();
 
+// projects
 router.get('/', authenticate, getAllProjects);
 router.get('/:projectId', authenticate, isValidProjectId, getProjectById);
 router.post('/', authenticate, validateBody(addProjectSchema), addProject);

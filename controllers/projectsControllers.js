@@ -76,18 +76,18 @@ const updateProjectName = async (req, res, next) => {
   });
 };
 
-const updateStatusProject = async (req, res, next) => {
-  const { contactId } = req.params;
-  const result = await Project.findByIdAndUpdate(contactId, req.body, { new: true });
-  if (!result) {
-    throw new HttpError(404, 'Not found');
-  }
-  res.status(201).json({
-    status: 'success',
-    code: 201,
-    result,
-  });
-};
+// const updateStatusProject = async (req, res, next) => {
+//   const { contactId } = req.params;
+//   const result = await Project.findByIdAndUpdate(contactId, req.body, { new: true });
+//   if (!result) {
+//     throw new HttpError(404, 'Not found');
+//   }
+//   res.status(201).json({
+//     status: 'success',
+//     code: 201,
+//     result,
+//   });
+// };
 
 const removeProject = async (req, res, next) => {
   const { projectId } = req.params;
@@ -120,7 +120,7 @@ module.exports = {
   getProjectById: controllerWrapper(getProjectById),
   addProject: controllerWrapper(addProject),
   updateProjectName: controllerWrapper(updateProjectName),
-  updateStatusProject: controllerWrapper(updateStatusProject),
+  // updateStatusProject: controllerWrapper(updateStatusProject),
   removeProject: controllerWrapper(removeProject),
   addUserToProject: controllerWrapper(addUserToProject),
 };
